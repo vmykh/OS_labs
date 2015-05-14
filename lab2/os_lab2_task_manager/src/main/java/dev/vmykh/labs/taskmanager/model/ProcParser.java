@@ -10,13 +10,13 @@ import java.util.regex.Pattern;
  * Created by mrgibbs on 13.05.15.
  */
 public class ProcParser {
-    private static String PROCESSOR_STAT_FILENAME = "/proc/stat";
-    private static String PROCESS_STAT_FILENAME_TEMPLATE = "/proc/%d/stat";
-    private static String PROCESS_STATUS_FILENAME_TEMPLATE = "/proc/%d/status";
+    private static final String PROCESSOR_STAT_FILENAME = "/proc/stat";
+    private static final String PROCESS_STAT_FILENAME_TEMPLATE = "/proc/%d/stat";
+    private static final String PROCESS_STATUS_FILENAME_TEMPLATE = "/proc/%d/status";
 
-    private static String SH_INTERPRETER = "/bin/sh";
-    private static String SH_FLAG = "-c";
-    private static String GET_PROC_USERNAME_SCRIPT =
+    private static final String SH_INTERPRETER = "/bin/sh";
+    private static final String SH_FLAG = "-c";
+    private static final String GET_PROC_USERNAME_SCRIPT =
             "uid=$(awk '/^Uid:/{print $2}' /proc/%d/status); getent passwd \"$uid\" | awk -F: '{print $1}'";
 
     private Map<String, Integer> keysPositions;

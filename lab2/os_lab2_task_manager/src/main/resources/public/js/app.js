@@ -10,14 +10,9 @@ $(function() {
       // These are the default column widths which are used when the table is
       // initialized or resizing is reset; note that the "Age" column is not
       // resizable, but the width can still be set to 40px here
-      resizable_widths : [ '10%', '10%', '40px', '10%', '100px' ]
+      resizable_widths : [ '10%', '30%', 'auto', 'auto', '10%', '15%', "8%" ]
     }
   });
-
-  // $(".process-line td input[id]").click(function(event) {
-  //   var pid = $(event.target).attr('id');
-  //   alert(pid);
-  // });
 
 
 
@@ -54,7 +49,6 @@ window.onload = function(){
         $(".full-width-table").trigger("update");
         $(".kill-button").click(function(event){
 
-              // alert("before sending post request " + event.target.id);
               var src_id = event.target.id;
               var pid = src_id.replace("process", "");
 
@@ -62,26 +56,11 @@ window.onload = function(){
               $.post( url, function( data ) {
                 
               });
-              // alert("post request sent. url: " + url);
             })
       });
 
-    // console.log($(".kill-button").click(function(event){
-
-    //   alert("before sending post request " + event.target.id);
-    //   // var src_id = event.target.id;
-    //   // var pid = src_id.replace("process", "");
-
-    //   // var url = "/killProcess/" + pid;
-    //   // $.post( url, function( data ) {
-        
-    //   // });
-    //   // alert("post request sent. url: " + url);
-    // }))
     setTimeout(update_processes_info, UPDATE_PERIOD);
   }
 
-
   update_processes_info();
-  // setTimeout(update_processes_info, UPDATE_PERIOD);
 }
