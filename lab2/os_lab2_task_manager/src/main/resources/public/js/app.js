@@ -14,6 +14,13 @@ $(function() {
     }
   });
 
+  // $(".process-line td input[id]").click(function(event) {
+  //   var pid = $(event.target).attr('id');
+  //   alert(pid);
+  // });
+
+
+
 });
 
 window.onload = function(){
@@ -34,6 +41,7 @@ window.onload = function(){
                 + td_template.replace("value", jd.username)
                 + td_template.replace("value", jd.cpu)
                 + td_template.replace("value", jd.memory)
+                + td_template.replace("value", "<input class=\"kill-button\" value=\"kill\" type=\"button\" id=\"process" + jd.pid + "\">")
                 + "</tr>";
 
         html += process_line;       
@@ -45,8 +53,22 @@ window.onload = function(){
             // let the plugin know that we made a update 
             $(".full-width-table").trigger("update");
       });
+
+    $(".kill-button").click(function(event){
+      // alert("before sending post request");
+      var src_id = event.target.id;
+      var pid = src_id.replace("process", "");
+
+      var url = "/killProcess/" + pid;
+      $.post( url, function( data ) {
+        
+      });
+      // alert("post request sent. url: " + url);
+    });
     setTimeout(update_processes_info, UPDATE_PERIOD);
   }
+
+
 
   setTimeout(update_processes_info, UPDATE_PERIOD);
 }

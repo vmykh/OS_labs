@@ -28,6 +28,7 @@ public class ProcsResource {
 
         post("/killProcess/:pid", (req, res) -> {
             os.killProcess(Integer.parseInt(req.params(":pid")));
+            System.out.println("Kill Request received. Process id:  = " + req.params(":pid"));
             return "";
         });
     }
