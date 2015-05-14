@@ -1,0 +1,19 @@
+th.tablesorter-header.resizable-false {
+  background-color: #e6bf99;
+}
+/* ensure box-sizing is set to content-box, if using jQuery versions older than 1.8;
+ this page is using jQuery 1.4 */
+*, *:before, *:after {
+  -moz-box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+  box-sizing: content-box;
+}
+
+.processes-table-wrapper {
+	width: 800px;
+	margin: auto;
+}
+
+#processes-table {
+	/*min-width: 800px;*/
+}

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Task Manager</title>
+
+    <!-- choose a theme file -->
+    <link rel="stylesheet" href="/css/theme.blue.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <!-- load jQuery and tablesorter scripts -->
+    <script type="text/javascript" src="/js/libs/jquery.js"></script>
+    <script type="text/javascript" src="/js/libs/tablesorter/jquery.tablesorter.js"></script>
+
+    <!-- tablesorter widgets (optional) -->
+    <script type="text/javascript" src="/js/tablesorter/jquery.tablesorter.widgets.js"></script>
+
+    <script src="/js/app.js"></script>
+</head>
+<body>
+There are some tasks!
+
+<!--<table id="myTable" class="tablesorter tablesorter-blue ">-->
+    <!--<thead>-->
+    <!--<tr>-->
+        <!--<th>Last Name</th>-->
+        <!--<th>First Name</th>-->
+        <!--<th>Email</th>-->
+        <!--<th>Due</th>-->
+        <!--<th>Web Site</th>-->
+    <!--</tr>-->
+    <!--</thead>-->
+    <!--<tbody>-->
+    <!--<tr>-->
+        <!--<td>Smith</td>-->
+        <!--<td>John</td>-->
+        <!--<td>jsmith@gmail.com</td>-->
+        <!--<td>$50.00</td>-->
+        <!--<td>http://www.jsmith.com</td>-->
+    <!--</tr>-->
+    <!--<tr>-->
+        <!--<td>Bach</td>-->
+        <!--<td>Frank</td>-->
+        <!--<td>fbach@yahoo.com</td>-->
+        <!--<td>$50.00</td>-->
+        <!--<td>http://www.frank.com</td>-->
+    <!--</tr>-->
+    <!--<tr>-->
+        <!--<td>Doe</td>-->
+        <!--<td>Jason</td>-->
+        <!--<td>jdoe@hotmail.com</td>-->
+        <!--<td>$100.00</td>-->
+        <!--<td>http://www.jdoe.com</td>-->
+    <!--</tr>-->
+    <!--<tr>-->
+        <!--<td>Conway</td>-->
+        <!--<td>Tim</td>-->
+        <!--<td>tconway@earthlink.net</td>-->
+        <!--<td>$50.00</td>-->
+        <!--<td>http://www.timconway.com</td>-->
+    <!--</tr>-->
+    <!--</tbody>-->
+<!--</table>-->
+
+<div class="processes-table-wrapper">
+	<table id="processes-table" class="full-width-table">
+    <thead>
+    <tr>
+        <th>Process ID</th>
+        <th>Process Name</th>
+        <th>State</th>
+        <th>User</th>
+        <th>CPU, %</th>
+        <th>Memory, KB</th>
+       <!--  <th class="resizable-false">Age</th>
+        <th>Total</th>
+        <th>Discount</th>
+        <th>Date</th> -->
+    </tr>
+    </thead>
+    <tbody class="processes-table-body">
+	
+<!-- 	<tr class="process-line">
+        <td>PID</td>
+        <td>Name</td>
+        <td>State</td>
+        <td>User</td>
+        <td>CPU</td>
+        <td>Memory</td>
+    </tr> -->
+
+    </tbody>
+</table>
+</div>
+
+<script>
+
+console.log("hello")
+
+// function sleep(ms) {
+// 	ms += new Date().getTime();
+// 	while (new Date() < ms){console.log("bingo")}
+// }
+
+// alert("1");
+// sleep(5000);
+// alert("1000");
+
+window.onload = function(){
+
+	// var trigger = 1;
+	//alert("window.onload");
+
+	// var start_blinking = function (node) {
+	// 	var trigger = true;
+	// 	//var level = 1;
+	// 	var step = function ( ) {
+	// 			if (trigger) {
+	// 				node.style["background-color"] = "#000";
+	// 				node.style["color"] = "#FFF";
+	// 			} else {
+	// 				node.style["background-color"] = "#FFF";
+	// 				node.style["color"] = "#000";
+	// 			}
+
+	// 			trigger = !trigger;
+
+	// 			setTimeout(step, 100);
+	// 	}
+
+	// 	setTimeout(step, 100);
+	// }
+
+		
+	
+	// document.getElementById("body_id").style["font-size"] = "100";
+	// document.getElementById("body_id").style["font-weight"] = "bold";
+	// document.getElementById("body_id").style["text-align"] = "center";
+	// start_blinking(document.getElementById("body_id"));
+
+	// while(true) {
+
+	// 	console.log("woohoo!");
+	// 	// if ((trigger % 2) == 0) {
+	// 	// 	document.getElementById("block").style["background-color"] = "#000";
+	// 	// } else {
+	// 	// 	document.getElementById("block").style["background-color"] = "#FFF";
+	// 	// }
+	// 	sleep(500);
+
+	// 	// trigger = (trigger + 1) % 2;
+
+	// }
+
+	var update_processes_info = function(){
+		$.getJSON('/currentProcessesInfo', function(jdata) {
+			var td_template = "<td>value</td>"
+
+			var html = ""
+			for (var i = 0; i < jdata.length; i++) {
+				var jd = jdata[i];
+
+				var process_line = "<tr class=\"process-line\">"
+								+ td_template.replace("value", jd.pid)
+								+ td_template.replace("value", jd.name)
+								+ td_template.replace("value", jd.state)
+								+ td_template.replace("value", jd.username)
+								+ td_template.replace("value", jd.cpu)
+								+ td_template.replace("value", jd.memory)
+								+ "</tr>";
+
+				// console.log(process_line);
+
+				html += process_line;				
+			};
+
+			// alert(html);
+
+
+			// append the "ajax'd" data to the table body
+			$(".full-width-table tbody").empty(); 
+            $(".full-width-table tbody").append(html); 
+            // let the plugin know that we made a update 
+            $(".full-width-table").trigger("update"); 
+            
+            // // set sorting column and direction, this will sort on the first and third column 
+            // var sorting = [[2,1],[0,0]]; 
+            // // sort on the first column 
+            // $("table").trigger("sorton",[sorting]); 
+    	});
+		setTimeout(update_processes_info, 1500);
+	}
+	setTimeout(update_processes_info, 1500);
+
+}
+</script>
+
+</body>
+</html>
