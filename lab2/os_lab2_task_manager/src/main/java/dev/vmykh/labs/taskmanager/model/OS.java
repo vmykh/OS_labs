@@ -3,6 +3,7 @@ package dev.vmykh.labs.taskmanager.model;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FilenameFilter;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -12,6 +13,7 @@ public class OS {
 
     private static final String PROC_FOLDER = "/proc";
     private static final String PROC_CPU_USAGE_PERCENTAGE_TEMPLATE = "%.1f";
+    private static final String KILL_PROCESS_SCRIPT_TEMPLATE = "kill %d";
     private static final int SLEEP_MILLIS_FOR_MEASURING_CPU_TIME = 1000;
     private static final int UPDATER_PAUSE_MILLIS = 0;
 
@@ -56,13 +58,24 @@ public class OS {
         return pids;
     }
 
+    public void killProcess(int pid){
+        String cmd = String.format(KILL_PROCESS_SCRIPT_TEMPLATE, pid);
+
+        try {
+            Runtime.getRuntime().exec(cmd);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public synchronized List<ProcessInfo> getCurrentProcsInfo() {
         return currentProcsInfo;
     }
 
-    public synchronized void setCurrentProcsInfo(List<ProcessInfo> currentProcsInfo) {
+    private synchronized void setCurrentProcsInfo(List<ProcessInfo> currentProcsInfo) {
         this.currentProcsInfo = currentProcsInfo;
     }
+
 
     private void updateProcessesInfo(){
         List<Integer> pids = fetchCurrentPids();

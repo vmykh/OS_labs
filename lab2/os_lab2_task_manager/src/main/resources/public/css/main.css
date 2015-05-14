@@ -17,3 +17,9 @@ th.tablesorter-header.resizable-false {
 #processes-table {
 	/*min-width: 800px;*/
 }
+
+.app-title {
+	text-align: center;
+	margin: auto;
+	font-size: 23px;
+}
