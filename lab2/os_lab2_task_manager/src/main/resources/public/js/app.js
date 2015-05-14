@@ -47,28 +47,41 @@ window.onload = function(){
         html += process_line;       
       };
 
-      $(".full-width-table tbody").empty(); 
-            $(".full-width-table tbody").append(html);
+        $(".full-width-table tbody").empty(); 
+        $(".full-width-table tbody").append(html);
 
-            // let the plugin know that we made a update 
-            $(".full-width-table").trigger("update");
+        // let the plugin know that we made a update 
+        $(".full-width-table").trigger("update");
+        $(".kill-button").click(function(event){
+
+              // alert("before sending post request " + event.target.id);
+              var src_id = event.target.id;
+              var pid = src_id.replace("process", "");
+
+              var url = "/killProcess/" + pid;
+              $.post( url, function( data ) {
+                
+              });
+              // alert("post request sent. url: " + url);
+            })
       });
 
-    $(".kill-button").click(function(event){
-      // alert("before sending post request");
-      var src_id = event.target.id;
-      var pid = src_id.replace("process", "");
+    // console.log($(".kill-button").click(function(event){
 
-      var url = "/killProcess/" + pid;
-      $.post( url, function( data ) {
+    //   alert("before sending post request " + event.target.id);
+    //   // var src_id = event.target.id;
+    //   // var pid = src_id.replace("process", "");
+
+    //   // var url = "/killProcess/" + pid;
+    //   // $.post( url, function( data ) {
         
-      });
-      // alert("post request sent. url: " + url);
-    });
+    //   // });
+    //   // alert("post request sent. url: " + url);
+    // }))
     setTimeout(update_processes_info, UPDATE_PERIOD);
   }
 
 
-
-  setTimeout(update_processes_info, UPDATE_PERIOD);
+  update_processes_info();
+  // setTimeout(update_processes_info, UPDATE_PERIOD);
 }
