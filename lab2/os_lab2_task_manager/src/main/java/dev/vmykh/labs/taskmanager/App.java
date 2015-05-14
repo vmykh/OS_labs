@@ -1,5 +1,7 @@
 package dev.vmykh.labs.taskmanager;
 
+import dev.vmykh.labs.taskmanager.model.OS;
+
 import static spark.Spark.setIpAddress;
 import static spark.Spark.setPort;
 import static spark.SparkBase.staticFileLocation;
@@ -12,6 +14,6 @@ public class App {
         setIpAddress(IP_ADDRESS);
         setPort(PORT);
         staticFileLocation("/public");
-        new ProcsResource();
+        new ProcsResource(OS.getInstance());
     }
 }

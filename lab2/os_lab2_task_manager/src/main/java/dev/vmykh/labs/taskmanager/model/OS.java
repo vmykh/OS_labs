@@ -137,7 +137,7 @@ public class OS {
 
                 long totalProcessCpuTimeStart = ppiStart.getUtime() + ppiStart.getCtime();
                 long totalProcessCpuTimeFinish = ppiFinish.getUtime() + ppiFinish.getCtime();
-                double processCpuUsage = (totalProcessCpuTimeFinish - totalProcessCpuTimeStart)
+                double processCpuUsage = 100.0 * (totalProcessCpuTimeFinish - totalProcessCpuTimeStart)
                                     / (double)(totalCpuTimeFinish - totalCpuTimeStart);
 
                 pi.setCpu(String.format(PROC_CPU_USAGE_PERCENTAGE_TEMPLATE, processCpuUsage));
@@ -176,6 +176,7 @@ public class OS {
     private class ProcessesInfoUpdater extends Thread {
         @Override
         public void run() {
+            int counter = 0;
             while(true) {
                 updateProcessesInfo();
                 try {
@@ -183,34 +184,35 @@ public class OS {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                System.out.println("Processes info updated");
+                System.out.println("Processes info updated " + counter);
+                counter++;
             }
         }
     }
 
-    public static void main(String[] args) {
-//        OS os = new OS();
-//        ProcessInfo pi = os.getProcessInfo(3160);
-//        System.out.println(pi);
-//        System.out.println(os.fetchCurrentPids());
-//        os.updateProcessesInfo();
-        OS os = OS.getInstance();
-        while (true) {
-            List<ProcessInfo> procs = null;
-            procs = os.getCurrentProcsInfo();
-//            System.out.println(os.getCurrentProcsInfo().size());
-            if (procs != null) {
-                System.out.println(procs.size());
-            } else {
-                System.out.println("not initialized");
-            }
-
-            try {
-                Thread.sleep(200);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-        }
-    }
+//    public static void main(String[] args) {
+////        OS os = new OS();
+////        ProcessInfo pi = os.getProcessInfo(3160);
+////        System.out.println(pi);
+////        System.out.println(os.fetchCurrentPids());
+////        os.updateProcessesInfo();
+//        OS os = OS.getInstance();
+//        while (true) {
+//            List<ProcessInfo> procs = null;
+//            procs = os.getCurrentProcsInfo();
+////            System.out.println(os.getCurrentProcsInfo().size());
+//            if (procs != null) {
+//                System.out.println(procs.size());
+//            } else {
+//                System.out.println("not initialized");
+//            }
+//
+//            try {
+//                Thread.sleep(200);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//
+//        }
+//    }
 }
