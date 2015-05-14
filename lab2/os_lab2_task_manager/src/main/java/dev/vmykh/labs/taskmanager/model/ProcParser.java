@@ -92,8 +92,10 @@ public class ProcParser {
                 throw new RuntimeException("Error. Strange content in file " + PROCESSOR_STAT_FILENAME);
             }
 
-            while (!((currentLine = br.readLine()).startsWith("VmRSS:"))) {
-//                System.out.println(sCurrentLine);
+            while ((currentLine = br.readLine()) != null) {
+                if (currentLine.startsWith("VmRSS:")) {
+                    break;
+                }
             }
 
             //
@@ -109,7 +111,7 @@ public class ProcParser {
 //                    ppi.setMemory(mem);
                 }
             } else {
-                throw new RuntimeException("Cannot read memory usage line of process #" + pid);
+                throw new FileNotFoundException("Cannot read memory usage line of process #" + pid);
             }
             if (mem != -1) {
                 ppi.setMemory(mem);
@@ -155,7 +157,7 @@ public class ProcParser {
             throw new RuntimeException("Error while executing script to get username of process #" + pid, e);
         }
 
-        System.out.println(ppi);
+//        System.out.println(ppi);
         return ppi;
     }
 
